@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleMovement();
         HandleJump();
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
     }
 
     private void HandleMovement()
