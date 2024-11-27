@@ -4,10 +4,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Settings")]
     public float speed = 5f;
     public float jumpForce = 10f;
-
     private Rigidbody2D rb;
     private bool isGrounded = true;
-
+    public Transform groundCheck;  
+    public float groundCheckRadius = 0.2f;  
+    public LayerMask groundLayer;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -17,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleMovement();
         HandleJump();
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+    }
     }
 
     private void HandleMovement()
@@ -43,12 +45,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            GameManager.Instance.GameOver(); // Notifica o GameManager
+            GameManager.Instance.GameOver();
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag ("Ground")){
+        if (collision.gameObject.CompareTag("Ground")){
             isGrounded = true;
         }
     }
