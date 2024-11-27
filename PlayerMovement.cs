@@ -45,4 +45,17 @@ public class PlayerMovement : MonoBehaviour
             GameManager.Instance.GameOver(); // Notifica o GameManager
         }
     }
+
+    private void OnCollisionStay2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag ("Ground")){
+            isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D Collision){
+        if (Collision.gameObject.CompareTag("Ground")){
+            isGrounded = false;
+        }
+    }
+
 }
