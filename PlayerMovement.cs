@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Settings")]
@@ -5,11 +7,11 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 10f;
 
     private Rigidbody2D rb;
-    private bool isGrounded = true;
+    private bool isGrounded;
 
     [Header("Ground Check Settings")]
-    public Transform groundCheck;  
-    public float groundCheckRadius = 0.2f;  
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
     private void Start()
@@ -33,21 +35,27 @@ public class PlayerMovement : MonoBehaviour
     private void HandleGroundCheck()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        
+        Debug.Log("Is Grounded: " + isGrounded);
     }
 
     private void HandleJump()
     {
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            Debug.Log("Jump Triggered!");
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmosSelected()
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        
+        if (groundCheck != null)
         {
-            GameManager.Instance.GameOver();
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
 }
