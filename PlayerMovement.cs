@@ -1,6 +1,6 @@
 
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour{
+
     [Header("Player Settings")]
     public float speed = 5f;
     public float jumpForce = 10f;
@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
         HandleJump();
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-    }
     }
 
     private void HandleMovement()
@@ -55,8 +54,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D Collision){
-        if (Collision.gameObject.CompareTag("Ground")){
+    private void OnCollisionExit2D(Collision2D collision){
+        if (collision.gameObject.CompareTag("Ground")){
             isGrounded = false;
         }
     }
