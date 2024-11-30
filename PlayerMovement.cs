@@ -40,11 +40,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            HandleObstacleCollision()
+            HandleObstacleCollision();
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)  
+    {   
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;  
